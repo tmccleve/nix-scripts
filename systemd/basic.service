@@ -1,0 +1,16 @@
+[Unit]
+Description=My janky network service
+After=network.target
+
+[Service]
+EnvironmentFile=-/etc/default/myenvfile
+ExecStart=/path/to/bin -c /etc/myconf.cnf
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
+Alias=janky.service
