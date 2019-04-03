@@ -1,0 +1,16 @@
+[Unit]
+Description=Go based BGP service
+After=network.target
+
+[Service]
+EnvironmentFile=-/etc/default/gobgp
+ExecStart=/usr/local/bin/gobgpd -f /etc/gobgp/global.toml
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=notify
+
+[Install]
+WantedBy=multi-user.target
+Alias=gobgp.service
